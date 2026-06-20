@@ -13,7 +13,11 @@ import EventHandler from "handlers/EventHandler";
 import { CommandHandler } from "handlers/CommandHandler";
 import { Editor } from "editor/Editor";
 
+import { initI18n } from "./lang/i18n";
+
 export default class TemplaterPlugin extends Plugin {
+    i18n: any;
+    t: (key: string, params?: any) => string;
     public settings: Settings = { ...DEFAULT_SETTINGS };
     public templater: Templater;
     public event_handler: EventHandler;
@@ -22,6 +26,8 @@ export default class TemplaterPlugin extends Plugin {
     public editor_handler: Editor;
 
     async onload(): Promise<void> {
+        this.i18n = initI18n(this);
+        this.t = this.i18n.t.bind(this.i18n);
         await this.load_settings();
 
         this.templater = new Templater(this);
@@ -39,7 +45,7 @@ export default class TemplaterPlugin extends Plugin {
         this.command_handler.setup();
 
         addIcon("templater-icon", ICON_DATA);
-        this.addRibbonIcon("templater-icon", "Templater", () => {
+        this.addRibbonIcon("templater-icon", this.t("Templater"), () => {
             this.fuzzy_suggester.insert_template();
         }).setAttribute("id", "rb-templater-icon");
 
@@ -75,10 +81,10 @@ export default class TemplaterPlugin extends Plugin {
         this.settings = settings;
         if (affectedSecuritySettings.length > 0) {
             new Notice(
-                "Templater: The following settings were reset because they " +
-                    "are now device-local: " +
-                    affectedSecuritySettings.join(", ") +
-                    ". Re-enable them in Templater settings if you trust this vault.",
+                this.t(
+                    "Templater: The following settings were reset because they are now device-local: {settings}. Re-enable them in Templater settings if you trust this vault.",
+                    { settings: affectedSecuritySettings.join(", ") },
+                ),
                 0,
             );
         }

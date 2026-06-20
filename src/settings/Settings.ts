@@ -141,19 +141,22 @@ export class TemplaterSettingTab extends PluginSettingTab {
             Record<keyof LocalSettings, { title: string; warning: string }>
         > = {
             enable_startup_templates: {
-                title: "Enable startup templates",
-                warning:
+                title: this.plugin.t("Enable startup templates"),
+                warning: this.plugin.t(
                     "This can be dangerous if you set a startup template with unknown/unsafe content. Make sure that every startup template's content is safe.",
+                ),
             },
             trigger_on_file_creation: {
-                title: "Trigger Templater on new file creation",
-                warning:
+                title: this.plugin.t("Trigger Templater on new file creation"),
+                warning: this.plugin.t(
                     "This can be dangerous if you create new files with unknown / unsafe content on creation. Make sure that every new file's content is safe on creation.",
+                ),
             },
             enable_system_commands: {
-                title: "Enable user system command functions",
-                warning:
+                title: this.plugin.t("Enable user system command functions"),
+                warning: this.plugin.t(
                     "It can be dangerous to execute arbitrary system commands from untrusted sources. Only run system commands that you understand, from trusted sources.",
+                ),
             },
         };
 
@@ -215,26 +218,28 @@ export class TemplaterSettingTab extends PluginSettingTab {
             type: "group",
             items: [
                 {
-                    name: "Internal variables and functions",
+                    name: this.plugin.t("Internal variables and functions"),
                     desc: (() => {
                         const internalFunctionsDesc = createFragment();
                         internalFunctionsDesc.append(
-                            "Templater provides multiples predefined variables / functions that you can use.",
+                            this.plugin.t(
+                                "Templater provides multiples predefined variables / functions that you can use."
+                            ),
                             internalFunctionsDesc.createEl("br"),
-                            "Check the ",
+                            this.plugin.t("Check the "),
                             internalFunctionsDesc.createEl("a", {
                                 href: "https://silentvoid13.github.io/Templater/",
                                 // eslint-disable-next-line obsidianmd/ui/sentence-case -- Inline link text within a sentence, not a standalone UI label
-                                text: "documentation",
+                                text: this.plugin.t("documentation"),
                             }),
-                            " to get a list of all the available internal variables / functions.",
+                            this.plugin.t(" to get a list of all the available internal variables / functions."),
                         );
                         return internalFunctionsDesc;
                     })(),
                 },
                 {
-                    name: "Template folder location",
-                    desc: "Files in this folder will be available as templates.",
+                    name: this.plugin.t("Template folder location"),
+                    desc: this.plugin.t("Files in this folder will be available as templates."),
                     control: {
                         type: "folder",
                         key: "templates_folder",
@@ -242,44 +247,44 @@ export class TemplaterSettingTab extends PluginSettingTab {
                 },
                 {
                     type: "page",
-                    name: "Template hotkeys",
+                    name: this.plugin.t("Template hotkeys"),
                     desc: (() => {
                         const templateHotkeysDesc = createFragment();
                         templateHotkeysDesc.append(
-                            "Bind templates to ",
+                            this.plugin.t("Bind templates to "),
                             templateHotkeysDesc.createEl("a", {
                                 href: "https://obsidian.md/help/plugins/command-palette",
                                 // eslint-disable-next-line obsidianmd/ui/sentence-case -- Inline link text within a sentence, not a standalone UI label
-                                text: "commands",
+                                text: this.plugin.t("commands"),
                             }),
-                            ". Bind commands to ",
+                            this.plugin.t(". Bind commands to "),
                             templateHotkeysDesc.createEl("a", {
                                 href: "https://obsidian.md/help/hotkeys",
                                 // eslint-disable-next-line obsidianmd/ui/sentence-case
-                                text: "hotkeys",
+                                text: this.plugin.t("hotkeys"),
                             }),
-                            ' in "Hotkeys" settings.',
+                            this.plugin.t(" in \"Hotkeys\" settings."),
                         );
                         return templateHotkeysDesc;
                     })(),
                     page: () => new TemplateHotkeysPage(this, this.plugin),
                 },
                 {
-                    name: "Automatic jump to cursor",
+                    name: this.plugin.t("Automatic jump to cursor"),
                     desc: (() => {
                         const autoJumpDesc = createFragment();
                         autoJumpDesc.append(
-                            "Automatically triggers ",
+                            this.plugin.t("Automatically triggers "),
                             autoJumpDesc.createEl("code", {
                                 // eslint-disable-next-line obsidianmd/ui/sentence-case -- Inline code identifier, not a UI label
-                                text: "tp.file.cursor",
+                                text: this.plugin.t("tp.file.cursor"),
                             }),
-                            " after inserting a template.",
+                            this.plugin.t(" after inserting a template."),
                             autoJumpDesc.createEl("br"),
-                            "You can also set a hotkey to manually trigger ",
+                            this.plugin.t("You can also set a hotkey to manually trigger "),
                             autoJumpDesc.createEl("code", {
                                 // eslint-disable-next-line obsidianmd/ui/sentence-case -- Inline code identifier, not a UI label
-                                text: "tp.file.cursor",
+                                text: this.plugin.t("tp.file.cursor"),
                             }),
                             ".",
                         );
@@ -288,8 +293,8 @@ export class TemplaterSettingTab extends PluginSettingTab {
                     control: { type: "toggle", key: "auto_jump_to_cursor" },
                 },
                 {
-                    name: "Jump to note content after creating note",
-                    desc: "When creating a new note from a template, skip the rename prompt and immediately move the cursor to the note body.",
+                    name: this.plugin.t("Jump to note content after creating note"),
+                    desc: this.plugin.t("When creating a new note from a template, skip the rename prompt and immediately move the cursor to the note body."),
                     control: {
                         type: "toggle",
                         key: "jump_to_cursor_after_file_name",
@@ -300,19 +305,19 @@ export class TemplaterSettingTab extends PluginSettingTab {
 
         items.push({
             type: "group",
-            heading: "Syntax highlighting",
+            heading: this.plugin.t("Syntax highlighting"),
             items: [
                 {
-                    name: "Syntax highlighting on desktop",
-                    desc: "Adds syntax highlighting for Templater commands in edit mode.",
+                    name: this.plugin.t("Syntax highlighting on desktop"),
+                    desc: this.plugin.t("Adds syntax highlighting for Templater commands in edit mode."),
                     control: {
                         type: "toggle",
                         key: "syntax_highlighting",
                     },
                 },
                 {
-                    name: "Syntax highlighting on mobile",
-                    desc: "Adds syntax highlighting for Templater commands in edit mode on mobile. Use with caution: this may break live preview on mobile platforms.",
+                    name: this.plugin.t("Syntax highlighting on mobile"),
+                    desc: this.plugin.t("Adds syntax highlighting for Templater commands in edit mode on mobile. Use with caution: this may break live preview on mobile platforms."),
                     control: {
                         type: "toggle",
                         key: "syntax_highlighting_mobile",
@@ -323,23 +328,23 @@ export class TemplaterSettingTab extends PluginSettingTab {
 
         items.push({
             type: "group",
-            heading: "File creation",
+            heading: this.plugin.t("File creation"),
             items: this.fileCreationGroup(localSettings),
         });
 
         items.push({
             type: "group",
-            heading: "Startup templates",
+            heading: this.plugin.t("Startup templates"),
             items: [
                 {
-                    name: "Enable startup templates",
+                    name: this.plugin.t("Enable startup templates"),
                     desc: createFragment((f) => {
                         f.append(
-                            "Enables templates to run automatically when Templater starts.",
+                            this.plugin.t("Enables templates to run automatically when Templater starts."),
                             createEl("br"),
                             createEl("br"),
                             createEl("span", {
-                                text: "This setting is stored on this device only and must be enabled separately on each device.",
+                                text: this.plugin.t("This setting is stored on this device only and must be enabled separately on each device."),
                                 cls: "mod-warning",
                             }),
                         );
@@ -351,8 +356,8 @@ export class TemplaterSettingTab extends PluginSettingTab {
                 },
                 {
                     type: "page",
-                    name: "Startup templates",
-                    desc: "Templates that run once when Templater starts. These output nothing and are useful for setting up event hooks.",
+                    name: this.plugin.t("Startup templates"),
+                    desc: this.plugin.t("Templates that run once when Templater starts. These output nothing and are useful for setting up event hooks."),
                     items: [this.startupTemplatesGroup()],
                     visible: () => localSettings.enable_startup_templates,
                 },
@@ -361,13 +366,13 @@ export class TemplaterSettingTab extends PluginSettingTab {
 
         items.push({
             type: "group",
-            heading: "User scripts",
+            heading: this.plugin.t("User scripts"),
             items: this.userScriptItems(),
         });
 
         items.push({
             type: "group",
-            heading: "User system commands",
+            heading: this.plugin.t("User system commands"),
             items: this.systemCommandItems(localSettings),
         });
 
@@ -379,63 +384,75 @@ export class TemplaterSettingTab extends PluginSettingTab {
     ): SettingGroupItem<keyof Settings | keyof LocalSettings>[] {
         const triggerDesc = createFragment();
         triggerDesc.append(
-            "Templater will listen for the new file creation event, and, if it matches a rule you've set, replace every command it finds in the new file's content. ",
-            "This makes Templater compatible with other plugins like the Daily note core plugin, Calendar plugin, Review plugin, Note refactor plugin, etc. ",
+            this.plugin.t(
+                "Templater will listen for the new file creation event, and, if it matches a rule you've set, replace every command it finds in the new file's content. "
+            ),
+            this.plugin.t(
+                "This makes Templater compatible with other plugins like the Daily note core plugin, Calendar plugin, Review plugin, Note refactor plugin, etc. "
+            ),
             createEl("br"),
             createEl("br"),
             createEl("span", {
-                text: "This setting is stored on this device only and must be enabled separately on each device.",
+                text: this.plugin.t("This setting is stored on this device only and must be enabled separately on each device."),
                 cls: "mod-warning",
             }),
         );
         const modeDescList = createEl("ul");
         modeDescList.appendChild(
             createEl("li", {
-                text: "None: Do not auto apply templates. Templater will still listen for the new file creation event and replace every command it finds in the new file's content.",
+                text: this.plugin.t("None: Do not auto apply templates. Templater will still listen for the new file creation event and replace every command it finds in the new file's content."),
             }),
         );
         modeDescList.appendChild(
             createEl("li", {
-                text: "Folder templates: Apply templates based on folder structure.",
+                text: this.plugin.t("Folder templates: Apply templates based on folder structure."),
             }),
         );
         modeDescList.appendChild(
             createEl("li", {
-                text: "File regex templates: Apply templates based on regex file name patterns.",
+                text: this.plugin.t("File regex templates: Apply templates based on regex file name patterns."),
             }),
         );
         const modeDesc = createFragment();
         modeDesc.append(
-            "Choose the matching mode for triggering templates on file creation.",
+            this.plugin.t("Choose the matching mode for triggering templates on file creation."),
             modeDesc.createEl("br"),
             modeDescList,
         );
 
         const folderTriggerDesc = createFragment();
         folderTriggerDesc.append(
-            "If there is a match, Templater will apply the corresponding template to the new file.",
+            this.plugin.t(
+                "If there is a match, Templater will apply the corresponding template to the new file."
+            ),
             folderTriggerDesc.createEl("br"),
-            "The most specific (deepest) matching folder wins, so a rule for a subfolder takes precedence over a rule for its parent.",
+            this.plugin.t(
+                "The most specific (deepest) matching folder wins, so a rule for a subfolder takes precedence over a rule for its parent."
+            ),
             folderTriggerDesc.createEl("br"),
-            "Add a rule for ",
+            this.plugin.t("Add a rule for "),
             folderTriggerDesc.createEl("code", { text: "/" }),
-            " if you need a catch-all.",
+            this.plugin.t(" if you need a catch-all."),
         );
 
         const fileRegexTriggerDesc = createFragment();
         fileRegexTriggerDesc.append(
-            "File regex templates are applied based on the regex file path patterns you define.",
+            this.plugin.t(
+                "File regex templates are applied based on the regex file path patterns you define."
+            ),
             fileRegexTriggerDesc.createEl("br"),
-            "File regex templates are processed in order, so if a file matches multiple regex templates, only the first match will be applied.",
+            this.plugin.t(
+                "File regex templates are processed in order, so if a file matches multiple regex templates, only the first match will be applied."
+            ),
             fileRegexTriggerDesc.createEl("br"),
-            "Add a rule for ",
+            this.plugin.t("Add a rule for "),
             fileRegexTriggerDesc.createEl("code", { text: ".*" }),
-            " if you need a catch-all.",
+            this.plugin.t(" if you need a catch-all."),
         );
 
         return [
             {
-                name: "Trigger Templater on new file creation",
+                name: this.plugin.t("Trigger Templater on new file creation"),
                 desc: triggerDesc,
                 control: {
                     type: "toggle",
@@ -444,28 +461,28 @@ export class TemplaterSettingTab extends PluginSettingTab {
             },
             {
                 type: "page",
-                name: "Excluded folders",
-                desc: "New files created in these folders will never trigger Templater.",
+                name: this.plugin.t("Excluded folders"),
+                desc: this.plugin.t("New files created in these folders will never trigger Templater."),
                 items: [this.ignoreFoldersGroup()],
                 visible: () => localSettings.trigger_on_file_creation,
             },
             {
-                name: "Template matching mode",
+                name: this.plugin.t("Template matching mode"),
                 desc: modeDesc,
                 control: {
                     type: "dropdown",
                     key: "trigger_on_file_creation_mode",
                     options: {
-                        none: "None",
-                        folder: "Folder templates",
-                        regex: "File regex templates",
+                        none: this.plugin.t("None"),
+                        folder: this.plugin.t("Folder templates"),
+                        regex: this.plugin.t("File regex templates"),
                     },
                 },
                 visible: () => localSettings.trigger_on_file_creation,
             },
             {
                 type: "page",
-                name: "Folder templates",
+                name: this.plugin.t("Folder templates"),
                 desc: folderTriggerDesc,
                 items: [this.folderTemplatesGroup()],
                 visible: () =>
@@ -475,7 +492,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
             },
             {
                 type: "page",
-                name: "File regex templates",
+                name: this.plugin.t("File regex templates"),
                 desc: fileRegexTriggerDesc,
                 items: [this.fileTemplatesGroup()],
                 visible: () =>
@@ -490,7 +507,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
         return {
             type: "list",
             addItem: {
-                name: "Add folder",
+                name: this.plugin.t("Add folder"),
                 action: () => {
                     new IgnoreFolderModal(this.app, (folder) => {
                         this.plugin.settings.ignore_folders_on_creation.push({
@@ -509,7 +526,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                 this.update();
                 void this.plugin.save_settings();
             },
-            emptyState: "No exclusions added.",
+            emptyState: this.plugin.t("No exclusions added."),
             items: this.plugin.settings.ignore_folders_on_creation.map(
                 (entry) => ({
                     name: entry.folder,
@@ -539,7 +556,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                             (e, i) => e.folder === folder && i !== excludeIndex,
                         )
                     ) {
-                        return "This folder already has a template associated with it";
+                        return this.plugin.t("This folder already has a template associated with it");
                     }
                 },
             ).open();
@@ -548,7 +565,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
         return {
             type: "list",
             addItem: {
-                name: "Add folder template",
+                name: this.plugin.t("Add folder template"),
                 action: () => {
                     openModal(
                         { folder: "", template: "" },
@@ -577,7 +594,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                 this.update();
                 void this.plugin.save_settings();
             },
-            emptyState: "No folder templates added.",
+            emptyState: this.plugin.t("No folder templates added."),
             items: this.plugin.settings.folder_templates.map(
                 (folder_template, index) => ({
                     name: folder_template.folder,
@@ -622,7 +639,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
         return {
             type: "list",
             addItem: {
-                name: "Add file regex template",
+                name: this.plugin.t("Add file regex template"),
                 action: () => {
                     openModal(
                         { regex: "", template: "" },
@@ -651,7 +668,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                 this.update();
                 void this.plugin.save_settings();
             },
-            emptyState: "No file regex templates added.",
+            emptyState: this.plugin.t("No file regex templates added."),
             items: this.plugin.settings.file_templates.map(
                 (file_template, index) => ({
                     name: file_template.regex,
@@ -683,7 +700,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
         return {
             type: "list",
             addItem: {
-                name: "Add new startup template",
+                name: this.plugin.t("Add new startup template"),
                 action: () => {
                     new StartupTemplateModal(
                         this.app,
@@ -703,7 +720,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                 this.update();
                 void this.plugin.save_settings();
             },
-            emptyState: "No startup templates added.",
+            emptyState: this.plugin.t("No startup templates added."),
             items: this.plugin.settings.startup_templates.map((template) => ({
                 name: template,
                 searchable: false,
@@ -714,21 +731,23 @@ export class TemplaterSettingTab extends PluginSettingTab {
     private userScriptItems(): SettingGroupItem<keyof Settings>[] {
         const items: SettingGroupItem<keyof Settings>[] = [];
         items.push({
-            name: "User scripts folder",
+            name: this.plugin.t("User scripts folder"),
             desc: (() => {
                 const desc = createFragment();
                 desc.append(
-                    "All JavaScript files in this folder will be loaded as CommonJS modules, to import custom user functions.",
+                    this.plugin.t(
+                        "All JavaScript files in this folder will be loaded as CommonJS modules, to import custom user functions."
+                    ),
                     desc.createEl("br"),
-                    "The folder needs to be accessible from the vault.",
+                    this.plugin.t("The folder needs to be accessible from the vault."),
                     desc.createEl("br"),
-                    "Check the ",
+                    this.plugin.t("Check the "),
                     desc.createEl("a", {
                         href: "https://silentvoid13.github.io/Templater/",
                         // eslint-disable-next-line obsidianmd/ui/sentence-case -- Inline link text within a sentence, not a standalone UI label
-                        text: "documentation",
+                        text: this.plugin.t("documentation"),
                     }),
-                    " for more information.",
+                    this.plugin.t(" for more information."),
                 );
                 return desc;
             })(),
@@ -739,24 +758,24 @@ export class TemplaterSettingTab extends PluginSettingTab {
         });
 
         items.push({
-            name: "User script intellisense",
-            desc: "Determine how you'd like to have user script intellisense render. Note values will not render if not in the script.",
+            name: this.plugin.t("User script intellisense"),
+            desc: this.plugin.t("Determine how you'd like to have user script intellisense render. Note values will not render if not in the script."),
             control: {
                 type: "dropdown",
                 key: "intellisense_render",
                 options: {
-                    0: "Turn off intellisense",
-                    1: "Render method description, parameters list, and return",
-                    2: "Render method description and parameters list",
-                    3: "Render method description and return",
-                    4: "Render method description",
+                    0: this.plugin.t("Turn off intellisense"),
+                    1: this.plugin.t("Render method description, parameters list, and return"),
+                    2: this.plugin.t("Render method description and parameters list"),
+                    3: this.plugin.t("Render method description and return"),
+                    4: this.plugin.t("Render method description"),
                 },
             },
         });
 
         items.push({
             type: "page",
-            name: "User scripts",
+            name: this.plugin.t("User scripts"),
             searchable: false,
             page: () => new UserScriptsPage(this, this.plugin),
         });
@@ -769,25 +788,27 @@ export class TemplaterSettingTab extends PluginSettingTab {
     ): SettingGroupItem<keyof Settings | keyof LocalSettings>[] {
         const shellDesc = createFragment();
         shellDesc.append(
-            "Full path to the shell binary to execute the command with.",
+            this.plugin.t("Full path to the shell binary to execute the command with."),
             shellDesc.createEl("br"),
-            "This setting is optional and will default to the system's default shell if not specified.",
+            this.plugin.t(
+                "This setting is optional and will default to the system's default shell if not specified."
+            ),
             shellDesc.createEl("br"),
-            "You can use forward slashes (",
+            this.plugin.t("You can use forward slashes ("),
             shellDesc.createEl("code", { text: "/" }),
-            ") as path separators on all platforms if in doubt.",
+            this.plugin.t(") as path separators on all platforms if in doubt."),
         );
 
         return [
             {
-                name: "Enable user system command functions",
+                name: this.plugin.t("Enable user system command functions"),
                 desc: createFragment((f) => {
                     f.append(
-                        "Allows you to create user functions linked to system commands.",
+                        this.plugin.t("Allows you to create user functions linked to system commands."),
                         createEl("br"),
                         createEl("br"),
                         createEl("span", {
-                            text: "This setting is stored on this device only and must be enabled separately on each device.",
+                            text: this.plugin.t("This setting is stored on this device only and must be enabled separately on each device."),
                             cls: "mod-warning",
                         }),
                     );
@@ -798,14 +819,14 @@ export class TemplaterSettingTab extends PluginSettingTab {
                 },
             },
             {
-                name: "Timeout",
-                desc: "Maximum timeout in seconds for a system command.",
+                name: this.plugin.t("Timeout"),
+                desc: this.plugin.t("Maximum timeout in seconds for a system command."),
                 control: {
                     type: "number",
                     key: "command_timeout",
                     validate: (value) => {
                         if (isNaN(value) || value <= 0) {
-                            return "Timeout must be a positive number";
+                            return this.plugin.t("Timeout must be a positive number");
                         }
                         return undefined;
                     },
@@ -813,7 +834,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                 visible: () => localSettings.enable_system_commands,
             },
             {
-                name: "Shell binary location",
+                name: this.plugin.t("Shell binary location"),
                 desc: shellDesc,
                 control: {
                     type: "text",
@@ -824,7 +845,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
             },
             {
                 type: "page",
-                name: "User system command functions",
+                name: this.plugin.t("User system command functions"),
                 items: [this.systemCommandPairsGroup()],
                 visible: () => localSettings.enable_system_commands,
             },
@@ -847,7 +868,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                             (p, i) => p[0] === name && i !== excludeIndex,
                         )
                     ) {
-                        return "This function name is already in use";
+                        return this.plugin.t("This function name is already in use");
                     }
                     return undefined;
                 },
@@ -857,7 +878,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
         return {
             type: "list",
             addItem: {
-                name: "Add new user function",
+                name: this.plugin.t("Add new user function"),
                 action: () => {
                     openModal({ name: "", command: "" }, (name, command) => {
                         this.plugin.settings.templates_pairs.push([
@@ -874,7 +895,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                 this.update();
                 void this.plugin.save_settings();
             },
-            emptyState: "No user functions added.",
+            emptyState: this.plugin.t("No user functions added."),
             items: this.plugin.settings.templates_pairs.map(
                 (template_pair, index) => ({
                     name: template_pair[0],

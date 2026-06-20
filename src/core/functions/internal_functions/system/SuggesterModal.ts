@@ -36,7 +36,7 @@ export class SuggesterModal<T> extends FuzzySuggestModal<T> {
 
     onClose(): void {
         if (!this.submitted) {
-            this.reject(new TemplaterError("Cancelled prompt"));
+            this.reject(new TemplaterError(this.t("Cancelled prompt")));
         }
     }
 
@@ -54,7 +54,7 @@ export class SuggesterModal<T> extends FuzzySuggestModal<T> {
             return this.text_items(item);
         }
         return (
-            this.text_items[this.items.indexOf(item)] || "Undefined Text Item"
+            this.text_items[this.items.indexOf(item)] || this.t("Undefined Text Item")
         );
     }
 

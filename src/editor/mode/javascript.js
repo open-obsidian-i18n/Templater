@@ -1302,25 +1302,17 @@
         }
 
         function isContinuedStatement(state, textAfter) {
-            return (
-                state.lastType == "operator" ||
-                state.lastType == "," ||
-                isOperatorChar.test(textAfter.charAt(0)) ||
-                /[,.]/.test(textAfter.charAt(0))
-            );
+            return (state.lastType == "operator" ||
+            state.lastType == "," ||
+            isOperatorChar.test(textAfter.charAt(0)) || /[,.]/.test(textAfter.charAt(0)));
         }
 
         function expressionAllowed(stream, state, backUp) {
-            return (
-                (state.tokenize == tokenBase &&
-                    /^(?:operator|sof|keyword [bcd]|case|new|export|default|spread|[[{}(,;:]|=>)$/.test(
-                        state.lastType
-                    )) ||
-                (state.lastType == "quasi" &&
-                    /\{\s*$/.test(
-                        stream.string.slice(0, stream.pos - (backUp || 0))
-                    ))
-            );
+            return ((state.tokenize == tokenBase && /^(?:operator|sof|keyword [bcd]|case|new|export|default|spread|[[{}(,;:]|=>)$/.test(
+                state.lastType
+            )) || (state.lastType == "quasi" && /\{\s*$/.test(
+                stream.string.slice(0, stream.pos - (backUp || 0))
+            )));
         }
 
         // Interface
@@ -1426,12 +1418,7 @@
                     !closing &&
                     parserConfig.doubleIndentSwitch != false
                 )
-                    return (
-                        lexical.indented +
-                        (/^(?:case|default)\b/.test(textAfter)
-                            ? indentUnit
-                            : 2 * indentUnit)
-                    );
+                    return (lexical.indented + (/^(?:case|default)\b/.test(textAfter) ? indentUnit : 2 * indentUnit));
                 else if (lexical.align)
                     return lexical.column + (closing ? 0 : 1);
                 else return lexical.indented + (closing ? 0 : indentUnit);

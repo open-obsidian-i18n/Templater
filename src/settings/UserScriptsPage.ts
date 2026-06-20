@@ -31,7 +31,7 @@ export class UserScriptsPage extends SettingPage {
                     this.plugin.app,
                     this.plugin.settings.user_scripts_folder,
                 ),
-            `User scripts folder doesn't exist`,
+            this.plugin.t("User scripts folder doesn't exist"),
         );
         this.userScripts = Array.isArray(files)
             ? files.filter((file) => file.extension === "js")
@@ -54,7 +54,7 @@ export class UserScriptsPage extends SettingPage {
                 .setHeading()
                 .addExtraButton((cb) => {
                     cb.setIcon("folder")
-                        .setTooltip("Open user scripts folder")
+                        .setTooltip(this.plugin.t("Open user scripts folder"))
                         .onClick(() =>
                             this.openUserScriptsFolderInDefaultApp(),
                         );
@@ -68,15 +68,19 @@ export class UserScriptsPage extends SettingPage {
                         const desc = createFragment();
                         if (!this.plugin.settings.user_scripts_folder) {
                             desc.append(
-                                "No user scripts folder set. Please set the user scripts folder on the previous page.",
+                                this.plugin.t(
+                                    "No user scripts folder set. Please set the user scripts folder on the previous page."
+                                ),
                                 desc.createEl("br"),
                                 desc.createEl("br"),
                             );
                         }
                         desc.append(
-                            "User scripts are JavaScript files that are loaded as CommonJS modules. You can then call these functions from your templates using ",
+                            this.plugin.t(
+                                "User scripts are JavaScript files that are loaded as CommonJS modules. You can then call these functions from your templates using "
+                            ),
                             desc.createEl("code", {
-                                text: "<% tp.user.file_name() %>",
+                                text: this.plugin.t("<% tp.user.file_name() %>"),
                             }),
                         );
                         return desc;

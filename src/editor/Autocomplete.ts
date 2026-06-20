@@ -137,7 +137,7 @@ export class Autocomplete extends EditorSuggest<TpSuggestDocumentation> {
 
         if (isFunctionDocumentation) {
             if (shouldRenderFunctionParameters) {
-                el.createEl("p", { text: "Parameter list:" });
+                el.createEl("p", { text: this.t("Parameter list:") });
                 const list = el.createEl("ol");
                 for (const [key, val] of Object.entries(value.args ?? {})) {
                     append_bolded_label_with_value_to_parent(
@@ -150,7 +150,7 @@ export class Autocomplete extends EditorSuggest<TpSuggestDocumentation> {
             if (shouldRenderFunctionReturns) {
                 append_bolded_label_with_value_to_parent(
                     el,
-                    "Returns",
+                    this.t("Returns"),
                     value.returns,
                 );
             }

@@ -74,7 +74,7 @@ export class Editor {
         if (this.templaterLanguage === undefined) {
             log_error(
                 new TemplaterError(
-                    "Unable to enable syntax highlighting. Could not define language."
+                    this.plugin.t("Unable to enable syntax highlighting. Could not define language.")
                 )
             );
         }
@@ -143,7 +143,7 @@ export class Editor {
         if (js_mode.name === "null") {
             log_error(
                 new TemplaterError(
-                    "Javascript syntax mode couldn't be found, can't enable syntax highlighting."
+                    this.plugin.t("Javascript syntax mode couldn't be found, can't enable syntax highlighting.")
                 )
             );
             return;
@@ -154,7 +154,7 @@ export class Editor {
         if (overlay_mode == null) {
             log_error(
                 new TemplaterError(
-                    "Couldn't find customOverlayMode, can't enable syntax highlighting."
+                    this.plugin.t("Couldn't find customOverlayMode, can't enable syntax highlighting.")
                 )
             );
             return;

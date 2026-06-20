@@ -24,17 +24,19 @@ export class FileRegexTemplateModal extends Modal {
     }
 
     onOpen() {
-        this.setTitle("File regex template");
+        this.setTitle(this.plugin.t("File regex template"));
         this.modalEl.addClass("templater-file-regex-template-modal");
         const { contentEl } = this;
 
         const regexSetting = new Setting(contentEl)
-            .setName("File regex")
+            .setName(this.plugin.t("File regex"))
             .setDesc(
-                "Regex to match on. Tests against full file path relative to the root of the vault, including file extension.",
+                this.plugin.t(
+                    "Regex to match on. Tests against full file path relative to the root of the vault, including file extension."
+                ),
             )
             .addText((cb) => {
-                cb.setPlaceholder("File regex")
+                cb.setPlaceholder(this.plugin.t("File regex"))
                     .setValue(this.regex)
                     .onChange((value) => {
                         this.regex = value;
@@ -42,15 +44,15 @@ export class FileRegexTemplateModal extends Modal {
             });
 
         const templateSetting = new Setting(contentEl)
-            .setName("Template")
-            .setDesc("Template to apply on match.")
+            .setName(this.plugin.t("Template"))
+            .setDesc(this.plugin.t("Template to apply on match."))
             .addText((cb) => {
                 new FileSuggest(
                     cb.inputEl,
                     this.plugin,
                     FileSuggestMode.TemplateFiles,
                 );
-                cb.setPlaceholder("Template")
+                cb.setPlaceholder(this.plugin.t("Template"))
                     .setValue(this.template)
                     .onChange((value) => {
                         this.template = value;
@@ -60,18 +62,18 @@ export class FileRegexTemplateModal extends Modal {
         new Setting(contentEl)
             .addButton((btn) =>
                 btn
-                    .setButtonText("Done")
+                    .setButtonText(this.plugin.t("Done"))
                     .setCta()
                     .onClick(async () => {
                         if (!this.regex) {
                             regexSetting.setErrorMessage(
-                                "File regex cannot be empty",
+                                this.plugin.t("File regex cannot be empty"),
                             );
                             return;
                         }
                         if (!this.template) {
                             templateSetting.setErrorMessage(
-                                "Template cannot be empty",
+                                this.plugin.t("Template cannot be empty"),
                             );
                             return;
                         }
@@ -80,7 +82,7 @@ export class FileRegexTemplateModal extends Modal {
                     }),
             )
             .addButton((btn) =>
-                btn.setButtonText("Cancel").onClick(() => this.close()),
+                btn.setButtonText(this.plugin.t("Cancel")).onClick(() => this.close()),
             );
     }
 

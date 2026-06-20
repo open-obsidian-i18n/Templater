@@ -115,12 +115,12 @@ export class Documentation {
                             this.plugin.settings.user_scripts_folder,
                         ).filter((x) => x.extension === "js"),
                     ),
-                `User Scripts folder doesn't exist`,
+                this.plugin.t("User Scripts folder doesn't exist"),
             );
             if (!jsFiles || jsFiles.length === 0) return;
             const docFiles = await errorWrapper(
                 () => populate_docs_from_user_scripts(this.plugin.app, jsFiles),
-                `Failed to parse user script documentation`,
+                this.plugin.t("Failed to parse user script documentation"),
             );
             if (!docFiles || docFiles.length === 0) return;
             return docFiles.reduce<TpFunctionDocumentation[]>(

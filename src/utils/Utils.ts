@@ -37,29 +37,39 @@ export function generate_dynamic_command_regex(): RegExp {
     return /(<%(?:-|_)?\s*[*~]{0,1})\+((?:.|\s)*?%>)/g;
 }
 
-export function resolve_tfolder(app: App, folder_str: string): TFolder {
+export function resolve_tfolder(
+    app: App,
+    folder_str: string,
+    t?: (key: string, params?: Record<string, string | number>) => string,
+): TFolder {
+    const _t = t || ((key: string) => key);
     folder_str = normalizePath(folder_str);
 
     const folder = app.vault.getAbstractFileByPath(folder_str);
     if (!folder) {
-        throw new TemplaterError(`Folder "${folder_str}" doesn't exist`);
+        throw new TemplaterError(_t('Folder "{folder}" doesn\'t exist', { folder: folder_str }));
     }
     if (!(folder instanceof TFolder)) {
-        throw new TemplaterError(`${folder_str} is a file, not a folder`);
+        throw new TemplaterError(_t("{folder} is a file, not a folder", { folder: folder_str }));
     }
 
     return folder;
 }
 
-export function resolve_tfile(app: App, file_str: string): TFile {
+export function resolve_tfile(
+    app: App,
+    file_str: string,
+    t?: (key: string, params?: Record<string, string | number>) => string,
+): TFile {
+    const _t = t || ((key: string) => key);
     file_str = normalizePath(file_str);
 
     const file = app.vault.getAbstractFileByPath(file_str);
     if (!file) {
-        throw new TemplaterError(`File "${file_str}" doesn't exist`);
+        throw new TemplaterError(_t('File "{file}" doesn\'t exist', { file: file_str }));
     }
     if (!(file instanceof TFile)) {
-        throw new TemplaterError(`${file_str} is a folder, not a file`);
+        throw new TemplaterError(_t("{file} is a folder, not a file", { file: file_str }));
     }
 
     return file;
@@ -68,8 +78,9 @@ export function resolve_tfile(app: App, file_str: string): TFile {
 export function get_tfiles_from_folder(
     app: App,
     folder_str: string,
+    t?: (key: string, params?: Record<string, string | number>) => string,
 ): Array<TFile> {
-    const folder = resolve_tfolder(app, folder_str);
+    const folder = resolve_tfolder(app, folder_str, t);
 
     const files: Array<TFile> = [];
     Vault.recurseChildren(folder, (file: TAbstractFile) => {

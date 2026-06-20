@@ -29,7 +29,7 @@ export class TemplateHotkeysPage extends SettingPage {
                     this.plugin.app,
                     this.plugin.settings.templates_folder,
                 ),
-            "Templates folder doesn't exist",
+            this.plugin.t("Templates folder doesn't exist"),
         );
 
         if (Array.isArray(allTemplates)) {
@@ -54,7 +54,9 @@ export class TemplateHotkeysPage extends SettingPage {
         if (!this.plugin.settings.templates_folder) {
             new Setting(this.containerEl)
                 .setName(
-                    "No templates folder set. Please set the template folder location on the previous page.",
+                    this.plugin.t(
+                        "No templates folder set. Please set the template folder location on the previous page."
+                    ),
                 )
                 .setClass("mod-empty-state");
             return;
@@ -65,21 +67,21 @@ export class TemplateHotkeysPage extends SettingPage {
             this.unmappedTemplates.length === 0
         ) {
             new Setting(this.containerEl)
-                .setName("No templates found in the templates folder.")
+                .setName(this.plugin.t("No templates found in the templates folder."))
                 .setClass("mod-empty-state");
             return;
         }
 
         if (this.mappedTemplates.length > 0) {
             const boundGroup = new SettingGroup(this.containerEl)
-                .setHeading("Bound templates")
+                .setHeading(this.plugin.t("Bound templates"))
                 .addClass("mod-list");
 
             this.mappedTemplates.forEach((template) => {
                 boundGroup.addSetting((setting) => {
                     setting.setName(template.path).addExtraButton((cb) => {
                         cb.setIcon("x")
-                            .setTooltip("Delete")
+                            .setTooltip(this.plugin.t("Delete"))
                             .onClick(() => {
                                 this.plugin.command_handler.remove_template_hotkey(
                                     template.path,
@@ -104,7 +106,7 @@ export class TemplateHotkeysPage extends SettingPage {
 
         if (this.unmappedTemplates.length > 0) {
             const unboundGroup = new SettingGroup(this.containerEl)
-                .setHeading("Unbound templates")
+                .setHeading(this.plugin.t("Unbound templates"))
                 .addClass("mod-list");
 
             this.unmappedTemplates.forEach((template) => {

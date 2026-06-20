@@ -13,7 +13,7 @@ export class CommandHandler {
     setup(): void {
         this.plugin.addCommand({
             id: "insert-templater",
-            name: "Open insert template modal",
+            name: this.plugin.t("Open insert template modal"),
             icon: "templater-icon",
             // eslint-disable-next-line obsidianmd/commands/no-default-hotkeys -- It would require a lot of support to help users migrate because this plugin is old
             hotkeys: Platform.isMacOS
@@ -31,7 +31,7 @@ export class CommandHandler {
 
         this.plugin.addCommand({
             id: "replace-in-file-templater",
-            name: "Replace templates in the active file",
+            name: this.plugin.t("Replace templates in the active file"),
             icon: "templater-icon",
             // eslint-disable-next-line obsidianmd/commands/no-default-hotkeys -- It would require a lot of support to help users migrate because this plugin is old
             hotkeys: Platform.isMacOS
@@ -50,7 +50,7 @@ export class CommandHandler {
         this.plugin.addCommand({
             id: "jump-to-next-cursor-location",
             // eslint-disable-next-line obsidianmd/ui/sentence-case -- cursor should be lowercase
-            name: "Jump to next cursor location",
+            name: this.plugin.t("Jump to next cursor location"),
             icon: "text-cursor",
             // eslint-disable-next-line obsidianmd/commands/no-default-hotkeys -- It would require a lot of support to help users migrate because this plugin is old
             hotkeys: [
@@ -66,7 +66,7 @@ export class CommandHandler {
 
         this.plugin.addCommand({
             id: "create-new-note-from-template",
-            name: "Create new note from template",
+            name: this.plugin.t("Create new note from template"),
             icon: "templater-icon",
             // eslint-disable-next-line obsidianmd/commands/no-default-hotkeys -- It would require a lot of support to help users migrate because this plugin is old
             hotkeys: Platform.isMacOS
@@ -113,12 +113,12 @@ export class CommandHandler {
 
             this.plugin.addCommand({
                 id: new_template,
-                name: `Insert ${new_template_name}`,
+                name: this.plugin.t("Insert {name}", { name: new_template_name }),
                 icon: "templater-icon",
                 callback: async () => {
                     const template = errorWrapperSync(
                         () => resolve_tfile(this.plugin.app, new_template),
-                        `Couldn't find the template file associated with this hotkey`,
+                        this.plugin.t("Couldn't find the template file associated with this hotkey"),
                     );
                     if (!template) {
                         return;
@@ -130,12 +130,12 @@ export class CommandHandler {
             });
             this.plugin.addCommand({
                 id: `create-${new_template}`,
-                name: `Create ${new_template_name}`,
+                name: this.plugin.t("Create {name}", { name: new_template_name }),
                 icon: "templater-icon",
                 callback: async () => {
                     const template = errorWrapperSync(
                         () => resolve_tfile(this.plugin.app, new_template),
-                        `Couldn't find the template file associated with this hotkey`,
+                        this.plugin.t("Couldn't find the template file associated with this hotkey"),
                     );
                     if (!template) {
                         return;
@@ -158,21 +158,22 @@ export class CommandHandler {
     register_cli_handler(): void {
         this.plugin.registerCliHandler(
             "templater:create-from-template",
-            "Create a new note from a Templater template",
+            this.plugin.t("Create a new note from a Templater template"),
             {
                 template: {
                     value: "<path>",
-                    description:
+                    description: this.plugin.t(
                         "Template file path (relative to vault root or templates folder)",
+                    ),
                     required: true,
                 },
                 file: {
                     value: "<path>",
-                    description: "Output file path (relative to vault root)",
+                    description: this.plugin.t("Output file path (relative to vault root)"),
                     required: true,
                 },
                 open: {
-                    description: "Open the created file in the UI",
+                    description: this.plugin.t("Open the created file in the UI"),
                     required: false,
                 },
             },
@@ -196,7 +197,9 @@ export class CommandHandler {
                 );
                 return resolve_tfile(this.plugin.app, full_path);
             }
-            throw new Error(`Template "${template}" not found`);
+            throw new Error(
+                this.plugin.t('Template "{template}" not found', { template }),
+            );
         }
     }
 
@@ -206,10 +209,10 @@ export class CommandHandler {
         const { template, file, open } = params;
 
         if (!template) {
-            return "Error: template parameter is required";
+            return this.plugin.t("Error: template parameter is required");
         }
         if (!file) {
-            return "Error: file parameter is required";
+            return this.plugin.t("Error: file parameter is required");
         }
 
         try {
@@ -242,9 +245,11 @@ export class CommandHandler {
             if (created_file) {
                 return created_file.path;
             }
-            return "Error: Failed to create note from template";
+            return this.plugin.t("Error: Failed to create note from template");
         } catch (error) {
-            return `Error: ${error instanceof Error ? error.message : String(error)}`;
+            return this.plugin.t("Error: {message}", {
+                message: error instanceof Error ? error.message : String(error),
+            });
         }
     }
 }

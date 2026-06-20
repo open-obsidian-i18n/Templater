@@ -95,7 +95,7 @@ export class UserSystemFunctions implements IGenerateObject {
                             return stdout.trimRight();
                         } catch (error) {
                             throw new TemplaterError(
-                                `Error with User Template ${template}`,
+                                this.plugin.t("Error with User Template {template}", { template }),
                                 error instanceof Error
                                     ? error.message
                                     : String(error),

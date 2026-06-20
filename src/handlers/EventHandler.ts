@@ -78,7 +78,7 @@ export default class EventHandler {
                 (menu: Menu, file: TFile) => {
                     if (file instanceof TFolder) {
                         menu.addItem((item: MenuItem) => {
-                            item.setTitle("Create new note from template")
+                            item.setTitle(this.plugin.t("Create new note from template"))
                                 .setIcon("templater-icon")
                                 .onClick(() => {
                                     this.plugin.fuzzy_suggester.create_new_note_from_template(

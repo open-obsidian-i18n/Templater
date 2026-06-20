@@ -12,15 +12,15 @@ export class IgnoreFolderModal extends Modal {
     }
 
     onOpen() {
-        this.setTitle("Add exclusion");
+        this.setTitle(this.t("Add exclusion"));
         const { contentEl } = this;
 
         this.modalEl.addClass("templater-ignore-folder-modal");
 
         const folderSetting = new Setting(contentEl)
-            .setName("Folder")
+            .setName(this.t("Folder"))
             // eslint-disable-next-line obsidianmd/ui/sentence-case -- This is sentence case, the e.g. is throwing off the linter
-            .setDesc("Enter a path, e.g. meta/templates")
+            .setDesc(this.t("Enter a path, e.g. meta/templates"))
             .addText((cb) => {
                 new FolderSuggest(this.app, cb.inputEl);
                 cb.onChange((value) => {
@@ -30,18 +30,18 @@ export class IgnoreFolderModal extends Modal {
 
         const buttonContainer = contentEl.createDiv("modal-button-container");
         new ButtonComponent(buttonContainer)
-            .setButtonText("Done")
+            .setButtonText(this.t("Done"))
             .setCta()
             .onClick(async () => {
                 if (!this.folder) {
-                    folderSetting.setErrorMessage("Folder cannot be empty");
+                    folderSetting.setErrorMessage(this.t("Folder cannot be empty"));
                     return;
                 }
                 await this.onSubmit(this.folder);
                 this.close();
             });
         new ButtonComponent(buttonContainer)
-            .setButtonText("Cancel")
+            .setButtonText(this.t("Cancel"))
             .onClick(() => this.close());
     }
 

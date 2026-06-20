@@ -31,7 +31,7 @@ export class PromptModal extends Modal {
     onClose(): void {
         this.contentEl.empty();
         if (!this.submitted) {
-            this.reject(new TemplaterError("Cancelled prompt"));
+            this.reject(new TemplaterError(this.t("Cancelled prompt")));
         }
     }
 
@@ -52,13 +52,13 @@ export class PromptModal extends Modal {
         buttonDiv.addClass("templater-button-div");
         const submitButton = new ButtonComponent(buttonDiv);
         submitButton.buttonEl.addClass("mod-cta");
-        submitButton.setButtonText("Submit").onClick((evt: Event) => {
+        submitButton.setButtonText(this.t("Submit")).onClick((evt: Event) => {
             this.resolveAndClose(evt);
         });
 
         this.value = this.default_value ?? "";
         textInput.inputEl.addClass("templater-prompt-input");
-        textInput.setPlaceholder("Type text here");
+        textInput.setPlaceholder(this.t("Type text here"));
         textInput.setValue(this.value);
         textInput.onChange((value) => (this.value = value));
         textInput.inputEl.focus();

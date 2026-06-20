@@ -16,8 +16,8 @@ import { Editor } from "editor/Editor";
 import { initI18n } from "./lang/i18n";
 
 export default class TemplaterPlugin extends Plugin {
-    i18n: any;
-    t: (key: string, params?: any) => string;
+    i18n: unknown;
+    t: (key: string, params?: unknown) => string;
     public settings: Settings = { ...DEFAULT_SETTINGS };
     public templater: Templater;
     public event_handler: EventHandler;

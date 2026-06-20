@@ -40,7 +40,7 @@ export class I18nAdapter implements I18nTranslator {
 
     constructor(pluginId: string, initialLocale?: string) {
         this.id = pluginId;
-        this._currentLocale = initialLocale || (window as any).moment?.locale() || 'en';
+        this._currentLocale = initialLocale || (window as unknown).moment?.locale() || 'en';
 
         // Initialize last successful locale to current if it's a built-in
         if (BUILTIN_LOCALES[this._currentLocale]) {
@@ -123,12 +123,12 @@ export class I18nAdapter implements I18nTranslator {
 export function initI18n(plugin: Plugin): I18nAdapter {
     const adapter = new I18nAdapter(
         plugin.manifest.id,
-        (plugin as any).settings?.locale
+        (plugin as unknown).settings?.locale
     );
 
     // Register with i18n-plus if available
     const register = () => {
-        const i18n = (window as any).i18nPlus;
+        const i18n = (window as unknown).i18nPlus;
         if (!i18n) return;
 
         i18n.register(plugin.manifest.id, {
@@ -136,7 +136,7 @@ export function initI18n(plugin: Plugin): I18nAdapter {
             baseLocale: BASE_LOCALE,
             getLocale: () => adapter.getLocale(),
             setLocale: (l: string) => adapter.setLocale(l),
-            t: (k: string, p?: any) => adapter.t(k, p),
+            t: (k: string, p?: unknown) => adapter.t(k, p),
             loadDictionary: (locale: string, dict: Record<string, string>) => {
                 adapter.loadDictionary(locale, dict);
                 return { valid: true };

@@ -229,7 +229,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                             this.plugin.t("Check the "),
                             internalFunctionsDesc.createEl("a", {
                                 href: "https://silentvoid13.github.io/Templater/",
-                                // eslint-disable-next-line obsidianmd/ui/sentence-case -- Inline link text within a sentence, not a standalone UI label
+                                 
                                 text: this.plugin.t("documentation"),
                             }),
                             this.plugin.t(" to get a list of all the available internal variables / functions."),
@@ -254,13 +254,13 @@ export class TemplaterSettingTab extends PluginSettingTab {
                             this.plugin.t("Bind templates to "),
                             templateHotkeysDesc.createEl("a", {
                                 href: "https://obsidian.md/help/plugins/command-palette",
-                                // eslint-disable-next-line obsidianmd/ui/sentence-case -- Inline link text within a sentence, not a standalone UI label
+                                 
                                 text: this.plugin.t("commands"),
                             }),
                             this.plugin.t(". Bind commands to "),
                             templateHotkeysDesc.createEl("a", {
                                 href: "https://obsidian.md/help/hotkeys",
-                                // eslint-disable-next-line obsidianmd/ui/sentence-case
+                                 
                                 text: this.plugin.t("hotkeys"),
                             }),
                             this.plugin.t(" in \"Hotkeys\" settings."),
@@ -276,14 +276,14 @@ export class TemplaterSettingTab extends PluginSettingTab {
                         autoJumpDesc.append(
                             this.plugin.t("Automatically triggers "),
                             autoJumpDesc.createEl("code", {
-                                // eslint-disable-next-line obsidianmd/ui/sentence-case -- Inline code identifier, not a UI label
+                                 
                                 text: this.plugin.t("tp.file.cursor"),
                             }),
                             this.plugin.t(" after inserting a template."),
                             autoJumpDesc.createEl("br"),
                             this.plugin.t("You can also set a hotkey to manually trigger "),
                             autoJumpDesc.createEl("code", {
-                                // eslint-disable-next-line obsidianmd/ui/sentence-case -- Inline code identifier, not a UI label
+                                 
                                 text: this.plugin.t("tp.file.cursor"),
                             }),
                             ".",
@@ -744,7 +744,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                     this.plugin.t("Check the "),
                     desc.createEl("a", {
                         href: "https://silentvoid13.github.io/Templater/",
-                        // eslint-disable-next-line obsidianmd/ui/sentence-case -- Inline link text within a sentence, not a standalone UI label
+                         
                         text: this.plugin.t("documentation"),
                     }),
                     this.plugin.t(" for more information."),

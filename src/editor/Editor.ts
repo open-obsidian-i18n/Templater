@@ -68,7 +68,7 @@ export class Editor {
                 window.CodeMirror.getMode(
                     {},
                     TEMPLATER_MODE_NAME
-                ) as unknown as Parameters<typeof StreamLanguage.define>[0]
+                )
             )
         );
         if (this.templaterLanguage === undefined) {

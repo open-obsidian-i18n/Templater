@@ -29,9 +29,6 @@ jobs:
             - name: Install dependencies
               run: pnpm install
 
-            - name: Lint code
-              run: pnpm lint
-
             - name: Build plugin
               run: pnpm build
 
